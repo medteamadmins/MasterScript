@@ -34,7 +34,7 @@ Else {
 $LocalAdminGroupFile = "C:\ProgramData\TMT\LocalAdminGroup\RemoveUsersFromLocalAdminGroup.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/LocalAdminGroup/main/RemoveUsersFromLocalAdminGroup.ps1" -OutFile "C:\ProgramData\TMT\LocalAdminGroup\RemoveUsersFromLocalAdminGroup.ps1"
 Invoke-expression -Command $LocalAdminGroupFile
-$b = $a.popup("Local Admin Changes Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
+# $b = $a.popup("Local Admin Changes Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
 # Step 1: RE-PARTITION
 $PartitionFolder = "C:\ProgramData\TMT\Partition"
@@ -47,7 +47,7 @@ Else {
 $PartitionFile = "C:\ProgramData\TMT\Partition\Repartition.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/Repartition/main/Repartition.ps1" -OutFile "C:\ProgramData\TMT\Partition\Repartition.ps1"
 Invoke-expression -Command $PartitionFile
-$b = $a.popup("Repartition Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
+# $b = $a.popup("Repartition Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
 
 
@@ -63,7 +63,7 @@ $FolderRedirectionFile = "C:\ProgramData\TMT\FolderRedirection\FolderRedirection
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/FolderRedirection/main/FolderRedirectionDownload.ps1" -OutFile "C:\ProgramData\TMT\FolderRedirection\FolderRedirectionDownload.ps1"
 Invoke-expression -Command $FolderRedirectionFile
 
-$b = $a.popup("Folder Redirection Changes Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
+# $b = $a.popup("Folder Redirection Changes Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
 
 
@@ -80,11 +80,7 @@ $ChangeComputerNameFile = "C:\ProgramData\TMT\ChangeComputerName\PCSChangeComput
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/ChangeComputerName/main/PCSChangeComputerName.ps1" -OutFile "C:\ProgramData\TMT\ChangeComputerName\PCSChangeComputerName.ps1"
 Invoke-expression -Command $ChangeComputerNameFile
 
-$b = $a.popup("Change Computer Name Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
-
-
-
-
+# $b = $a.popup("Change Computer Name Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
 
 
@@ -101,11 +97,7 @@ $RemoveHPBloatwareFile = "C:\ProgramData\TMT\RemoveHPBloatware\RemoveHPBloatware
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/HPBloatwareRemover/main/RemoveHPBloatware.ps1" -OutFile "C:\ProgramData\TMT\RemoveHPBloatware\RemoveHPBloatware.ps1"
 Invoke-expression -Command $RemoveHPBloatwareFile
 
-$b = $a.popup("Remove HP Bloatware Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
-
-
-
-
+# $b = $a.popup("Remove HP Bloatware Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
 
 
@@ -121,10 +113,13 @@ $WindowsDebloatFile = "C:\ProgramData\TMT\WindowsDebloat\Debloat.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/WindowsBloatware/main/Debloat.ps1" -OutFile "C:\ProgramData\TMT\WindowsDebloat\Debloat.ps1"
 Invoke-expression -Command $WindowsDebloatFile
 
-$b = $a.popup("Remove Windows Bloatware Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
+# $b = $a.popup("Remove Windows Bloatware Successful. Press OK to continue",5,"Configuration Status",0x0)
 
 New-Item -Path "C:\ProgramData\TMT\MasterScriptDone1.0.txt"
 New-Item -Path "C:\ProgramData\TMT\Done1.0.txt"
+
+$b = $a.popup("The configuration is complete.  You may now use your computer after the reboot. Press OK to reboot",-1,"Configuration Status",0x0)
+
 Start-Sleep -Seconds 30
 Restart-Computer -Force
 }
