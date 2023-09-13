@@ -187,5 +187,7 @@ if (Test-Path -Path $registryPath) {
 
 $b = $a.popup("Windows Setup Complete.  Rebooting in 30 seconds",30,"Configuration is in Progress",0)
 
+New-Item -Path "C:\ProgramData\TMT\Done1.0.txt"
+
 Start-Sleep -Seconds 30
 Restart-Computer -Force
