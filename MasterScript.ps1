@@ -21,7 +21,7 @@ if (Test-Path $MasterScriptDone) {
     # There are no additional members
 $b = $a.popup("The computer is ready to use",-1,"Configuration Complete",0x0)
 } else {
-$b = $a.popup("Please DO NOT USE this computer at this moment. We are setting up this computer. It will restart when complete",-1,"Configuration is in Progress",0x0)
+$b = $a.popup("Please DO NOT USE this computer at this moment. We are setting up this computer. Press OK to continue",-1,"Configuration is in Progress",0x0)
 
 
 $LocalAdminGroupFolder = "C:\ProgramData\TMT\LocalAdminGroup"
