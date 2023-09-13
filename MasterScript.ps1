@@ -124,8 +124,7 @@ Invoke-expression -Command $WindowsDebloatFile
 $b = $a.popup("Remove Windows Bloatware Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
 New-Item -Path "C:\ProgramData\TMT\MasterScriptDone1.0.txt"
-}
-New-Item -Path "C:\ProgramData\TMT\Done1.0.txt"
-
 Start-Sleep -Seconds 30
 Restart-Computer -Force
+}
+New-Item -Path "C:\ProgramData\TMT\Done1.0.txt"
