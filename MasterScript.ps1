@@ -1,6 +1,6 @@
 New-Item -Path "C:\MasterScriptIsStarting.txt"
 
-$MasterScriptDone = "C:\ProgramData\TMT\MasterScripDone1.0.txt"
+$MasterScriptDone = "C:\ProgramData\TMT\MasterScriptDone1.0.txt"
 
 $a = new-object -comobject wscript.shell
 
@@ -17,9 +17,7 @@ $members = $administratorsGroup.Invoke("Members") | ForEach-Object {
 $additionalMembers = $members | Where-Object { $_ -notin $expectedMembers }
 
 # Display the appropriate notification
-if ($additionalMembers.Count -eq 0) and
-	(Test-Path $MasterScriptDone)
-{
+if (Test-Path $MasterScriptDone) {
     # There are no additional members
 $b = $a.popup("The computer is ready to use",-1,"Configuration Complete",0x0)
 } else {
@@ -125,7 +123,7 @@ Invoke-expression -Command $WindowsDebloatFile
 
 $b = $a.popup("Remove Windows Bloatware Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
-New-Item - Path "C:\ProgramData\TMT\MasterScripDone1.0.txt"
+New-Item -Path "C:\ProgramData\TMT\MasterScriptDone1.0.txt"
 }
 New-Item -Path "C:\ProgramData\TMT\Done1.0.txt"
 
