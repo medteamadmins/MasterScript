@@ -21,9 +21,9 @@ $additionalMembers = $members | Where-Object { $_ -notin $expectedMembers }
 # Display the appropriate notification
 if ($additionalMembers.Count -eq 0) {
     # There are no additional members
-$b = $a.popup("The computer is ready to use",5,"Configuration Complete",0)
+$b = $a.popup("The computer is ready to use",-1,"Configuration Complete",0)
 } else {
-$b = $a.popup("Please DO NOT USE this computer at this moment. We are setting up this computer. It will restart when complete",5,"Configuration is in Progress",0)
+$b = $a.popup("Please DO NOT USE this computer at this moment. We are setting up this computer. It will restart when complete",10,"Configuration is in Progress",0)
 }
 
 
@@ -44,7 +44,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/LocalAdm
 Invoke-expression -Command $LocalAdminGroupFile
 # New-Item -Path "C:\RepartitionSuccessful.txt"
 # [System.Windows.MessageBox]::Show('Local Admin Changes Successful.  Press OK to continue')
-$b = $a.popup("Local Admin Changes Successful. Press OK to continue",5,"Configuration is in Progress",0)
+$b = $a.popup("Local Admin Changes Successful. Press OK to continue",10,"Configuration is in Progress",0)
 
 
 # Step 1: RE-PARTITION
@@ -65,7 +65,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/Repartit
 Invoke-expression -Command $PartitionFile
 # New-Item -Path "C:\RepartitionSuccessful.txt"
 # [System.Windows.MessageBox]::Show('Repartition Successful.  Press OK to continue')
-$b = $a.popup("Repartition Successful. Press OK to continue",5,"Configuration is in Progress",0)
+$b = $a.popup("Repartition Successful. Press OK to continue",10,"Configuration is in Progress",0)
 
 
 # New-Item -Path "C:\Step1CompleteGoingToStep2.txt"
@@ -90,7 +90,7 @@ Invoke-expression -Command $FolderRedirectionFile
 
 # New-Item -Path "C:\RepartitionSuccessful.txt"
 # [System.Windows.MessageBox]::Show('Folder Redirection Changes Successful.  Press OK to continue')
-$b = $a.popup("Folder Redirection Changes Successful. Press OK to continue",5,"Configuration is in Progress",0)
+$b = $a.popup("Folder Redirection Changes Successful. Press OK to continue",10,"Configuration is in Progress",0)
 
 
 
@@ -113,7 +113,7 @@ Invoke-expression -Command $ChangeComputerNameFile
 
 # New-Item -Path "C:\RepartitionSuccessful.txt"
 # [System.Windows.MessageBox]::Show('Change Computer Name Successful.  Press OK to continue')
-$b = $a.popup("Change Computer Name Successful. Press OK to continue",5,"Configuration is in Progress",0)
+$b = $a.popup("Change Computer Name Successful. Press OK to continue",10,"Configuration is in Progress",0)
 
 
 
@@ -140,7 +140,7 @@ Invoke-expression -Command $RemoveHPBloatwareFile
 
 # New-Item -Path "C:\RepartitionSuccessful.txt"
 # [System.Windows.MessageBox]::Show('Remove HP Bloatware Successful.  Press OK to continue')
-$b = $a.popup("Remove HP Bloatware Successfu. Press OK to continue",5,"Configuration is in Progress",0)
+$b = $a.popup("Remove HP Bloatware Successfu. Press OK to continue",10,"Configuration is in Progress",0)
 
 
 
@@ -169,4 +169,23 @@ Invoke-expression -Command $WindowsDebloatFile
 
 # New-Item -Path "C:\RepartitionSuccessful.txt"
 # [System.Windows.MessageBox]::Show('Remove Windows Bloatware Successful.  Press OK to continue')
-$b = $a.popup("Remove Windows Bloatware Successful. Press OK to continue",5,"Configuration is in Progress",0)
+$b = $a.popup("Remove Windows Bloatware Successful. Press OK to continue",10,"Configuration is in Progress",0)
+
+
+$registryPath = "HKLM:\Software\Microsoft\Windows\CurrentVersion\RunOnce"
+$registryName = "RunTMTScript"
+
+# Check if the registry key exists
+if (Test-Path -Path $registryPath) {
+    # Remove the registry key
+    Remove-ItemProperty -Path $registryPath -Name $registryName
+    Write-Host "Registry key $registryName has been removed."
+} else {
+    Write-Host "Registry key $registryName does not exist."
+}
+
+
+$b = $a.popup("Windows Setup Complete.  Rebooting in 30 seconds",30,"Configuration is in Progress",0)
+
+Start-Sleep -Seconds 30
+Restart-Computer -Force
