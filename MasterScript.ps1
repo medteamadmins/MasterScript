@@ -1,3 +1,40 @@
+Add-Type -AssemblyName System.Windows.Forms
+
+# Create a form
+$form = New-Object Windows.Forms.Form
+$form.Text = "Progress Bar Demo"
+$form.Size = New-Object Drawing.Size(300, 100)
+$form.StartPosition = "CenterScreen"
+$form.FormBorderStyle = "FixedDialog"
+$form.MaximizeBox = $False
+$form.MinimizeBox = $False
+
+# Create a progress bar
+$progressBar = New-Object Windows.Forms.ProgressBar
+$progressBar.Maximum = 6  # Total number of tasks
+$progressBar.Value = 0
+$progressBar.Location = New-Object Drawing.Point(10, 30)
+$progressBar.Width = 260
+
+# Create a label
+$label = New-Object Windows.Forms.Label
+$label.Text = "Progress:"
+$label.Location = New-Object Drawing.Point(10, 10)
+
+# Add controls to the form
+$form.Controls.Add($label)
+$form.Controls.Add($progressBar)
+
+# Function to update the progress bar
+function Update-ProgressBar {
+    if ($progressBar.Value -lt $progressBar.Maximum) {
+        $progressBar.Value++
+    }
+    else {
+        $form.Close()
+    }
+}
+
 New-Item -Path "C:\MasterScriptIsStarting.txt"
 
 $MasterScriptDone = "C:\ProgramData\TMT\MasterScriptDone1.0.txt"
@@ -35,6 +72,7 @@ $LocalAdminGroupFile = "C:\ProgramData\TMT\LocalAdminGroup\RemoveUsersFromLocalA
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/LocalAdminGroup/main/RemoveUsersFromLocalAdminGroup.ps1" -OutFile "C:\ProgramData\TMT\LocalAdminGroup\RemoveUsersFromLocalAdminGroup.ps1"
 Invoke-expression -Command $LocalAdminGroupFile
 # $b = $a.popup("Local Admin Changes Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
+Update-ProgressBar
 
 # Step 1: RE-PARTITION
 $PartitionFolder = "C:\ProgramData\TMT\Partition"
@@ -47,6 +85,7 @@ Else {
 $PartitionFile = "C:\ProgramData\TMT\Partition\Repartition.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/Repartition/main/Repartition.ps1" -OutFile "C:\ProgramData\TMT\Partition\Repartition.ps1"
 Invoke-expression -Command $PartitionFile
+Update-ProgressBar
 # $b = $a.popup("Repartition Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
 
@@ -62,7 +101,7 @@ Else {
 $FolderRedirectionFile = "C:\ProgramData\TMT\FolderRedirection\FolderRedirectionDownload.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/FolderRedirection/main/FolderRedirectionDownload.ps1" -OutFile "C:\ProgramData\TMT\FolderRedirection\FolderRedirectionDownload.ps1"
 Invoke-expression -Command $FolderRedirectionFile
-
+Update-ProgressBar
 # $b = $a.popup("Folder Redirection Changes Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
 
@@ -79,7 +118,7 @@ Else {
 $ChangeComputerNameFile = "C:\ProgramData\TMT\ChangeComputerName\PCSChangeComputerName.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/ChangeComputerName/main/PCSChangeComputerName.ps1" -OutFile "C:\ProgramData\TMT\ChangeComputerName\PCSChangeComputerName.ps1"
 Invoke-expression -Command $ChangeComputerNameFile
-
+Update-ProgressBar
 # $b = $a.popup("Change Computer Name Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
 
@@ -96,7 +135,7 @@ Else {
 $RemoveHPBloatwareFile = "C:\ProgramData\TMT\RemoveHPBloatware\RemoveHPBloatware.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/HPBloatwareRemover/main/RemoveHPBloatware.ps1" -OutFile "C:\ProgramData\TMT\RemoveHPBloatware\RemoveHPBloatware.ps1"
 Invoke-expression -Command $RemoveHPBloatwareFile
-
+Update-ProgressBar
 # $b = $a.popup("Remove HP Bloatware Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
 
@@ -112,7 +151,7 @@ Else {
 $WindowsDebloatFile = "C:\ProgramData\TMT\WindowsDebloat\Debloat.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/WindowsBloatware/main/Debloat.ps1" -OutFile "C:\ProgramData\TMT\WindowsDebloat\Debloat.ps1"
 Invoke-expression -Command $WindowsDebloatFile
-
+Update-ProgressBar
 # $b = $a.popup("Remove Windows Bloatware Successful. Press OK to continue",5,"Configuration Status",0x0)
 
 New-Item -Path "C:\ProgramData\TMT\MasterScriptDone1.0.txt"
