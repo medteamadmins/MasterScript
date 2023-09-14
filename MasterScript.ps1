@@ -39,7 +39,10 @@ function Update-ProgressBar {
         $form.Close()
     }
 }
+# --------------------------------------------------------------------------------
 
+# Display a message box to force the computer reboot once done.
+$result = [System.Windows.Forms.MessageBox]::Show("The configuration is complete. You may now use your computer after the reboot. Press OK to reboot", "Reboot Confirmation", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
 
 # --------------------------------------------------------------------------------
 
@@ -196,7 +199,18 @@ Start-Sleep -Seconds 2
 
 $form.Close()
 
-$b = $a.popup("The configuration is complete. You may now use your computer after the reboot. Press OK to reboot",-1,"Configuration Status",0x0)
+# Check for the msg box run.
+if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
+
+    # Reboot the computer
+	Restart-Computer -Force
+
+} else {
+
+    # User canceled, do nothing
+	Write-Host "Reboot canceled."
+}
+
 #Start-Sleep -Seconds 30
-Restart-Computer -Force
+
 }
