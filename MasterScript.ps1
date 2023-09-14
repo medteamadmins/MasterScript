@@ -92,7 +92,7 @@ Else {
 
 $LocalAdminGroupFile = "C:\ProgramData\TMT\LocalAdminGroup\RemoveUsersFromLocalAdminGroup.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/LocalAdminGroup/main/RemoveUsersFromLocalAdminGroup.ps1" -OutFile "C:\ProgramData\TMT\LocalAdminGroup\RemoveUsersFromLocalAdminGroup.ps1"
-Invoke-expression -Command $LocalAdminGroupFile
+#Invoke-expression -Command $LocalAdminGroupFile
 
 
 #Update progress Bar
