@@ -1,5 +1,48 @@
 New-Item -Path "C:\MasterScriptIsStarting.txt"
 
+#----------------------------------------------------------------------------
+
+#Progress Bar
+Add-Type -AssemblyName System.Windows.Forms
+
+# Create a form
+$form = New-Object Windows.Forms.Form
+$form.Text = "Configuration is in Progress"
+$form.Size = New-Object Drawing.Size(300, 100)
+$form.StartPosition = "CenterScreen"
+$form.FormBorderStyle = "FixedDialog"
+$form.MaximizeBox = $False
+$form.MinimizeBox = $False
+
+# Create a progress bar
+$progressBar = New-Object Windows.Forms.ProgressBar
+$progressBar.Maximum = 10
+$progressBar.Value = 0
+$progressBar.Location = New-Object Drawing.Point(10, 30)
+$progressBar.Width = 360
+
+# Create a label
+$label = New-Object Windows.Forms.Label
+$label.Text = "Status:"
+$label.Location = New-Object Drawing.Point(10, 10)
+
+# Add controls to the form
+$form.Controls.Add($label)
+$form.Controls.Add($progressBar)
+
+# Function to update the progress bar
+function Update-ProgressBar {
+    if ($progressBar.Value -lt $progressBar.Maximum) {
+        $progressBar.Value++    }
+    else {
+        $timer.Stop()
+        $form.Close()
+    }
+}
+
+
+# --------------------------------------------------------------------------------
+
 $MasterScriptDone = "C:\ProgramData\TMT\MasterScriptDone1.0.txt"
 
 $a = new-object -comobject wscript.shell
@@ -21,8 +64,23 @@ if (Test-Path $MasterScriptDone) {
     # There are no additional members
 $b = $a.popup("The computer is ready to use",-1,"Configuration Complete",0x0)
 } else {
-$b = $a.popup("Please DO NOT USE this computer at this moment. We are setting up this computer. Press OK to continue",-1,"Configuration is in Progress",0x0)
+$b = $a.popup("Please DO NOT USE this computer at this moment. We are setting up this computer. It will restart when complete",-1,"Configuration Status",0x0)
 
+
+
+# Create a timer to update the progress
+$timer = New-Object System.Windows.Forms.Timer
+$timer.Interval = 100  # Update every 100 milliseconds
+$timer.Add_Tick({ Update-ProgressBar })
+
+
+#$form.Add_Shown({ $timer.Start() })
+$form.Show()
+$timer.start()
+#--------------------------------------------------------------------------------
+
+
+# Step 1: Local Admin Group
 
 $LocalAdminGroupFolder = "C:\ProgramData\TMT\LocalAdminGroup"
 If (Test-Path $LocalAdminGroupFolder) {
@@ -34,9 +92,13 @@ Else {
 $LocalAdminGroupFile = "C:\ProgramData\TMT\LocalAdminGroup\RemoveUsersFromLocalAdminGroup.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/LocalAdminGroup/main/RemoveUsersFromLocalAdminGroup.ps1" -OutFile "C:\ProgramData\TMT\LocalAdminGroup\RemoveUsersFromLocalAdminGroup.ps1"
 Invoke-expression -Command $LocalAdminGroupFile
-# $b = $a.popup("Local Admin Changes Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
 
-# Step 1: RE-PARTITION
+
+#Update progress Bar
+Update-ProgressBar
+
+
+# Step 2: RE-PARTITION
 $PartitionFolder = "C:\ProgramData\TMT\Partition"
 If (Test-Path $PartitionFolder) {
 }
@@ -47,11 +109,12 @@ Else {
 $PartitionFile = "C:\ProgramData\TMT\Partition\Repartition.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/Repartition/main/Repartition.ps1" -OutFile "C:\ProgramData\TMT\Partition\Repartition.ps1"
 Invoke-expression -Command $PartitionFile
-# $b = $a.popup("Repartition Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
+
+#Update progress Bar
+Update-ProgressBar
 
 
-
-
+# Step 3: 
 $FolderRedirectionFolder = "C:\ProgramData\TMT\FolderRedirection"
 If (Test-Path $FolderRedirectionFolder) {
 }
@@ -63,11 +126,11 @@ $FolderRedirectionFile = "C:\ProgramData\TMT\FolderRedirection\FolderRedirection
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/FolderRedirection/main/FolderRedirectionDownload.ps1" -OutFile "C:\ProgramData\TMT\FolderRedirection\FolderRedirectionDownload.ps1"
 Invoke-expression -Command $FolderRedirectionFile
 
-# $b = $a.popup("Folder Redirection Changes Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
+#Update progress Bar
+Update-ProgressBar
 
 
-
-
+# Step 4
 $ChangeComputerNameFolder = "C:\ProgramData\TMT\ChangeComputerName"
 If (Test-Path $ChangeComputerNameFolder) {
 }
@@ -80,10 +143,12 @@ $ChangeComputerNameFile = "C:\ProgramData\TMT\ChangeComputerName\PCSChangeComput
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/ChangeComputerName/main/PCSChangeComputerName.ps1" -OutFile "C:\ProgramData\TMT\ChangeComputerName\PCSChangeComputerName.ps1"
 Invoke-expression -Command $ChangeComputerNameFile
 
-# $b = $a.popup("Change Computer Name Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
+#Update progress Bar
+Update-ProgressBar
 
 
 
+# Step 5
 
 $RemoveHPBloatwareFolder = "C:\ProgramData\TMT\RemoveHPBloatware"
 If (Test-Path $RemoveHPBloatwareFolder) {
@@ -97,9 +162,13 @@ $RemoveHPBloatwareFile = "C:\ProgramData\TMT\RemoveHPBloatware\RemoveHPBloatware
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/HPBloatwareRemover/main/RemoveHPBloatware.ps1" -OutFile "C:\ProgramData\TMT\RemoveHPBloatware\RemoveHPBloatware.ps1"
 Invoke-expression -Command $RemoveHPBloatwareFile
 
-# $b = $a.popup("Remove HP Bloatware Successful. Press OK to continue",5,"Configuration is in Progress",0x0)
+#Update progress Bar
+Update-ProgressBar
 
 
+
+
+# Step 6
 
 $WindowsDebloatFolder = "C:\ProgramData\TMT\WindowsDebloat"
 If (Test-Path $WindowsDebloatFolder) {
@@ -113,14 +182,21 @@ $WindowsDebloatFile = "C:\ProgramData\TMT\WindowsDebloat\Debloat.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/WindowsBloatware/main/Debloat.ps1" -OutFile "C:\ProgramData\TMT\WindowsDebloat\Debloat.ps1"
 Invoke-expression -Command $WindowsDebloatFile
 
-# $b = $a.popup("Remove Windows Bloatware Successful. Press OK to continue",5,"Configuration Status",0x0)
+
+#Update progress Bar
+Update-ProgressBar
+
+
 
 New-Item -Path "C:\ProgramData\TMT\MasterScriptDone1.0.txt"
+
 New-Item -Path "C:\ProgramData\TMT\Done1.0.txt"
 
-$b = $a.popup("The configuration is complete.  You may now use your computer after the reboot. Press OK to reboot",-1,"Configuration Status",0x0)
+Start-Sleep -Seconds 2
 
-Start-Sleep -Seconds 30
-Restart-Computer -Force
+$form.Close()
+
+$b = $a.popup("The configuration is complete. Please restart your computer. You may now use your computer after the reboot.",5,"Configuration Status",0x0)
+# Start-Sleep -Seconds 30
+# Restart-Computer -Force
 }
-
