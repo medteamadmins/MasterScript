@@ -196,7 +196,7 @@ Start-Sleep -Seconds 2
 
 $form.Close()
 
-$b = $a.popup("The configuration is complete. Please restart your computer. You may now use your computer after the reboot.",5,"Configuration Status",0x0)
-# Start-Sleep -Seconds 30
-# Restart-Computer -Force
+$b = $a.popup("The configuration is complete. You may now use your computer after the reboot. Press OK to reboot",-1,"Configuration Status",0x0)
+#Start-Sleep -Seconds 30
+Restart-Computer -Force
 }
