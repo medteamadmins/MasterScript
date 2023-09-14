@@ -16,7 +16,7 @@ $form.MinimizeBox = $False
 
 # Create a progress bar
 $progressBar = New-Object Windows.Forms.ProgressBar
-$progressBar.Maximum = 10
+$progressBar.Maximum = 6
 $progressBar.Value = 0
 $progressBar.Location = New-Object Drawing.Point(10, 30)
 $progressBar.Width = 360
@@ -64,19 +64,19 @@ if (Test-Path $MasterScriptDone) {
     # There are no additional members
 $b = $a.popup("The computer is ready to use",-1,"Configuration Complete",0x0)
 } else {
-$b = $a.popup("Please DO NOT USE this computer at this moment. We are setting up this computer. It will restart when complete",-1,"Configuration Status",0x0)
+$b = $a.popup("Please DO NOT USE this computer at this moment. We are setting up this computer. It will restart when complete. Press OK to begin the setup",-1,"Configuration Status",0x0)
 
 
 
 # Create a timer to update the progress
-$timer = New-Object System.Windows.Forms.Timer
-$timer.Interval = 100  # Update every 100 milliseconds
-$timer.Add_Tick({ Update-ProgressBar })
+#$timer = New-Object System.Windows.Forms.Timer
+#$timer.Interval = 100  # Update every 100 milliseconds
+#$timer.Add_Tick({ Update-ProgressBar })
 
 
 #$form.Add_Shown({ $timer.Start() })
 $form.Show()
-$timer.start()
+#$timer.start()
 #--------------------------------------------------------------------------------
 
 
