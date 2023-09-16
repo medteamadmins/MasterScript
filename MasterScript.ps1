@@ -39,12 +39,10 @@ function Update-ProgressBar {
         $form.Close()
     }
 }
-# --------------------------------------------------------------------------------
 
+# -----------------------------SCRIPT STARTING---------------------------------------------------
 
-# --------------------------------------------------------------------------------
-
-$MasterScriptDone = "C:\ProgramData\TMT\MasterScriptDone1.0.txt"
+$MasterScriptDone = "C:\ProgramData\TMT\MasterScriptDone1.0.txt" # DO NOT DELETE.
 
 $a = new-object -comobject wscript.shell
 
@@ -65,24 +63,14 @@ if (Test-Path $MasterScriptDone) {
     # There are no additional members
 $b = $a.popup("The computer is ready to use",-1,"Configuration Complete",0x0)
 } else {
-$b = $a.popup("Please DO NOT USE this computer at this moment. We are setting up this computer. It will restart when complete. Press OK to begin the setup",-1,"Configuration Status",0x0)
+$b = $a.popup("Please DO NOT USE this computer at this moment. We are setting up this computer. It will require a restart when complete. Press OK to begin the setup",-1,"Configuration Status",0x0)
 
-
-
-# Create a timer to update the progress
-#$timer = New-Object System.Windows.Forms.Timer
-#$timer.Interval = 100  # Update every 100 milliseconds
-#$timer.Add_Tick({ Update-ProgressBar })
-
-
-#$form.Add_Shown({ $timer.Start() })
 $form.Show()
-#$timer.start()
-#--------------------------------------------------------------------------------
+
+#-------------------------------STEP BEIN--------------------------------------------------------------------------------------------------
 
 
 # Step 1: Local Admin Group
-
 $LocalAdminGroupFolder = "C:\ProgramData\TMT\LocalAdminGroup"
 If (Test-Path $LocalAdminGroupFolder) {
 }
@@ -92,8 +80,7 @@ Else {
 
 $LocalAdminGroupFile = "C:\ProgramData\TMT\LocalAdminGroup\RemoveUsersFromLocalAdminGroup.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/LocalAdminGroup/main/RemoveUsersFromLocalAdminGroup.ps1" -OutFile "C:\ProgramData\TMT\LocalAdminGroup\RemoveUsersFromLocalAdminGroup.ps1"
-#Invoke-expression -Command $LocalAdminGroupFile
-
+Invoke-expression -Command $LocalAdminGroupFile
 
 #Update progress Bar
 Update-ProgressBar
@@ -115,7 +102,7 @@ Invoke-expression -Command $PartitionFile
 Update-ProgressBar
 
 
-# Step 3: 
+# Step 3: Folder Redirection
 $FolderRedirectionFolder = "C:\ProgramData\TMT\FolderRedirection"
 If (Test-Path $FolderRedirectionFolder) {
 }
@@ -131,14 +118,13 @@ Invoke-expression -Command $FolderRedirectionFile
 Update-ProgressBar
 
 
-# Step 4
+# Step 4: Re-Name The Computer
 $ChangeComputerNameFolder = "C:\ProgramData\TMT\ChangeComputerName"
 If (Test-Path $ChangeComputerNameFolder) {
 }
 Else {
     New-Item -Path "$ChangeComputerNameFolder" -ItemType Directory
 }
-
 
 $ChangeComputerNameFile = "C:\ProgramData\TMT\ChangeComputerName\PCSChangeComputerName.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/ChangeComputerName/main/PCSChangeComputerName.ps1" -OutFile "C:\ProgramData\TMT\ChangeComputerName\PCSChangeComputerName.ps1"
@@ -148,16 +134,13 @@ Invoke-expression -Command $ChangeComputerNameFile
 Update-ProgressBar
 
 
-
-# Step 5
-
+# Step 5: Remove HP Bloatware.
 $RemoveHPBloatwareFolder = "C:\ProgramData\TMT\RemoveHPBloatware"
 If (Test-Path $RemoveHPBloatwareFolder) {
 }
 Else {
     New-Item -Path "$RemoveHPBloatwareFolder" -ItemType Directory
 }
-
 
 $RemoveHPBloatwareFile = "C:\ProgramData\TMT\RemoveHPBloatware\RemoveHPBloatware.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/HPBloatwareRemover/main/RemoveHPBloatware.ps1" -OutFile "C:\ProgramData\TMT\RemoveHPBloatware\RemoveHPBloatware.ps1"
@@ -167,10 +150,7 @@ Invoke-expression -Command $RemoveHPBloatwareFile
 Update-ProgressBar
 
 
-
-
-# Step 6
-
+# Step 6: Remove Windows Debloat.
 $WindowsDebloatFolder = "C:\ProgramData\TMT\WindowsDebloat"
 If (Test-Path $WindowsDebloatFolder) {
 }
@@ -178,35 +158,30 @@ Else {
     New-Item -Path "$WindowsDebloatFolder" -ItemType Directory
 }
 
-
 $WindowsDebloatFile = "C:\ProgramData\TMT\WindowsDebloat\Debloat.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/medteamadmins/WindowsBloatware/main/Debloat.ps1" -OutFile "C:\ProgramData\TMT\WindowsDebloat\Debloat.ps1"
 Invoke-expression -Command $WindowsDebloatFile
 
-
 #Update progress Bar
 Update-ProgressBar
 
-
-
-New-Item -Path "C:\ProgramData\TMT\MasterScriptDone1.0.txt"
-
-New-Item -Path "C:\ProgramData\TMT\Done1.0.txt"
+New-Item -Path "C:\ProgramData\TMT\MasterScriptDone1.0.txt" # DO NOT DELETE.
+New-Item -Path "C:\ProgramData\TMT\Done1.0.txt" # DO NOT DELETE.
 
 Start-Sleep -Seconds 2
 
 $form.Close()
 
-# Display a message box
+# Display a message box to ask users for a reboot.
 $result = [System.Windows.Forms.MessageBox]::Show("The configuration is complete. You may now use your computer after the reboot. Press OK to reboot", "Reboot Confirmation", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
 # Check the user's choice
-if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
-    # Reboot the computer
-    Restart-Computer -Force
-} else {
+	if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
+		# Reboot the computer
+		Restart-Computer -Force
+	} else {
     # User canceled, do nothing
-}
+	}
 
-# End Script.
+# -----------------------------------SCRIPT END-------------------------
 
 }
