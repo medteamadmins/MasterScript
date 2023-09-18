@@ -16,7 +16,7 @@ $form.MinimizeBox = $False
 
 # Create a progress bar
 $progressBar = New-Object Windows.Forms.ProgressBar
-$progressBar.Maximum = 6
+$progressBar.Maximum = 8
 $progressBar.Value = 0
 $progressBar.Location = New-Object Drawing.Point(10, 30)
 $progressBar.Width = 360
