@@ -1,4 +1,4 @@
-New-Item -Path "C:\MasterScriptIsStarting.txt"
+#New-Item -Path "C:\MasterScriptIsStarting.txt"
 
 #----------------------------------------------------------------------------
 
