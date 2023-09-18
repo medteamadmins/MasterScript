@@ -165,6 +165,9 @@ Invoke-expression -Command $WindowsDebloatFile
 #Update progress Bar
 Update-ProgressBar
 
+# Copy Remote Desktop shortcut to Desktop
+cp "C:\Users\$($ENV:USERNAME)\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Remote Desktop.lnk" "D:\$($ENV:USERNAME)\Desktop"
+
 New-Item -Path "C:\ProgramData\TMT\MasterScriptDone1.0.txt" # DO NOT DELETE.
 New-Item -Path "C:\ProgramData\TMT\Done1.0.txt" # DO NOT DELETE.
 
