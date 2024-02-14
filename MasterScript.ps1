@@ -169,7 +169,7 @@ Update-ProgressBar
 cp "C:\Users\$($ENV:USERNAME)\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Remote Desktop.lnk" "D:\$($ENV:USERNAME)\Desktop"
 
 New-Item -Path "C:\Users\$($ENV:USERNAME)\AppData\MasterScriptDone1.0.txt" # DO NOT DELETE.
-New-Item -Path "C:\ProgramData\TMT\Done1.0.txt" # DO NOT DELETE.
+New-Item -Path "C:\Users\$($ENV:USERNAME)\AppData\Done1.0.txt" # DO NOT DELETE.
 
 Start-Sleep -Seconds 2
 
