@@ -185,6 +185,7 @@ Copy-Item -Path $ExcelPath -Destination $PublicDesktop
 
 New-Item -Path "C:\ProgramData\TMT\MasterScriptDone1.0.txt"
 New-Item -Path "C:\ProgramData\TMT\Done1.0.txt"
+New-Item -Path "C:\Users\$($ENV:USERNAME)\AppData\MasterScriptDone1.0.txt"
 
 Start-Sleep -Seconds 2
 
