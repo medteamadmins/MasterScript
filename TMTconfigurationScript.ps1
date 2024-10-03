@@ -47,7 +47,7 @@ $MasterScriptDone = "C:\Users\$($ENV:USERNAME)\AppData\MasterScriptDone1.0.txt" 
 $a = new-object -comobject wscript.shell
 
 # Declare expected users in the Local Admin Group
-$expectedMembers = @("Medtrator", "tmtadmin")
+$expectedMembers = @("Medtrator", "S-1-12-1-1605978423-1201099401-1932580286-3281254816")
 
 # Get the members of the Administrators group
 $administratorsGroup = [ADSI]"WinNT://./Administrators,group"
