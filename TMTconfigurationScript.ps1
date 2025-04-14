@@ -8,7 +8,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Create a form
 $form = New-Object Windows.Forms.Form
 $form.Text = "Configuration is in Progress"
-$form.Size = New-Object Drawing.Size(300, 100)
+$form.Size = New-Object Drawing.Size(330, 100)
 $form.StartPosition = "CenterScreen"
 $form.FormBorderStyle = "FixedDialog"
 $form.MaximizeBox = $False
@@ -19,12 +19,12 @@ $progressBar = New-Object Windows.Forms.ProgressBar
 $progressBar.Maximum = 8
 $progressBar.Value = 0
 $progressBar.Location = New-Object Drawing.Point(10, 30)
-$progressBar.Width = 360
+$progressBar.Width = 300
 
 # Create a label
 $label = New-Object Windows.Forms.Label
-$label.Text = "Status:"
-$label.Location = New-Object Drawing.Point(10, 10)
+$label.Text = "Please wait!"
+$label.Location = New-Object Drawing.Point(5, 5)
 
 # Add controls to the form
 $form.Controls.Add($label)
