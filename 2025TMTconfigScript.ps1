@@ -232,6 +232,22 @@ Copy-Item -Path "C:\Users\$($ENV:USERNAME)\AppData\Roaming\Microsoft\Windows\Sta
 Copy-Item -Path "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Word.lnk"            -Destination $PublicDesktop -ErrorAction SilentlyContinue
 Copy-Item -Path "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Excel.lnk"           -Destination $PublicDesktop -ErrorAction SilentlyContinue
 
+# For Outlook (new) client
+$AppLink = "Microsoft.OutlookForWindows_8wekyb3d8bbwe!Microsoft.OutlookForWindows" # Replace with actual values
+$WScriptShell = New-Object -ComObject WScript.Shell
+$Shortcut = $WScriptShell.CreateShortcut("$env:USERPROFILE\Desktop\Outlook.lnk")
+$Shortcut.Arguments = "shell:AppsFolder\$AppLink"
+$Shortcut.TargetPath = "shell:AppsFolder\$AppLink"
+$Shortcut.Save()
+
+# For Teams
+$AppLink = "MSTeams_8wekyb3d8bbwe!MSTeams" # Replace with actual values
+$WScriptShell = New-Object -ComObject WScript.Shell
+$Shortcut = $WScriptShell.CreateShortcut("$env:USERPROFILE\Desktop\MS Teams.lnk")
+$Shortcut.Arguments = "shell:AppsFolder\$AppLink"
+$Shortcut.TargetPath = "shell:AppsFolder\$AppLink"
+$Shortcut.Save()   
+
 Set-ProgressStep -StepIndex 5 -TotalSteps $TotalSteps -Bar $ui.Bar -SubLabel $ui.Sub -StepTitle $Steps[4]
 
 # ----------------------------- STEP 6: Finalizing --------------------------------------
@@ -256,3 +272,4 @@ if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
 } else {
     # no-op
 }
+
