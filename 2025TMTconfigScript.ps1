@@ -246,7 +246,15 @@ $WScriptShell = New-Object -ComObject WScript.Shell
 $Shortcut = $WScriptShell.CreateShortcut("$env:USERPROFILE\Desktop\MS Teams.lnk")
 $Shortcut.Arguments = "shell:AppsFolder\$AppLink"
 $Shortcut.TargetPath = "shell:AppsFolder\$AppLink"
-$Shortcut.Save()   
+$Shortcut.Save()
+	
+# Windows App
+$AppLink = "MicrosoftCorporationII.Windows365_8wekyb3d8bbwe!Windows365" # Replace with actual values
+$WScriptShell = New-Object -ComObject WScript.Shell
+$Shortcut = $WScriptShell.CreateShortcut("$env:USERPROFILE\Desktop\TMT Workspace.lnk")
+$Shortcut.Arguments = "shell:AppsFolder\$AppLink"
+$Shortcut.TargetPath = "shell:AppsFolder\$AppLink"
+$Shortcut.Save()
 
 Set-ProgressStep -StepIndex 5 -TotalSteps $TotalSteps -Bar $ui.Bar -SubLabel $ui.Sub -StepTitle $Steps[4]
 
@@ -272,4 +280,5 @@ if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
 } else {
     # no-op
 }
+
 
